@@ -1,38 +1,273 @@
-.App {
-  text-align: center;
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Prevent font size inflation */
+html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin-block-end: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+    list-style: none;
 }
 
-.App-link {
-  color: #61dafb;
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    line-height: 1.5;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Set shorter line heights on headings and interactive elements */
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+    line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1,
+h2,
+h3,
+h4 {
+    text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+    color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+    min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+    scroll-margin-block: 5ex;
+}
+
+/* Personal reset prefernces */
+button {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    color: inherit;
+}
+
+/* Custom properties */
+:root {
+    --clr-primary: 0 0% 89%;
+    --clr-secondary: 0 0% 10%;
+    --clr-accent: 200 100% 20%;
+
+    --step--2: clamp(0.5556rem, 0.6601rem + -0.1348vw, 0.6331rem);
+    --step--1: clamp(0.8331rem, 0.8474rem + -0.0185vw, 0.8438rem);
+    --step-0: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+    --step-1: clamp(1.4994rem, 1.3687rem + 0.6533vw, 1.875rem);
+    --step-2: clamp(1.9988rem, 1.7157rem + 1.4152vw, 2.8125rem);
+    --step-3: clamp(2.6644rem, 2.1237rem + 2.7033vw, 4.2188rem);
+    --step-4: clamp(3.5519rem, 2.5862rem + 4.8283vw, 6.3281rem);
+    --step-5: clamp(4.735rem, 3.0802rem + 8.2739vw, 9.4925rem);
+
+    --space-3xs: clamp(0.3125rem, 0.3125rem + 0vw, 0.3125rem);
+    --space-2xs: clamp(0.5625rem, 0.5408rem + 0.1087vw, 0.625rem);
+    --space-xs: clamp(0.875rem, 0.8533rem + 0.1087vw, 0.9375rem);
+    --space-s: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+    --space-m: clamp(1.6875rem, 1.6223rem + 0.3261vw, 1.875rem);
+    --space-l: clamp(2.25rem, 2.163rem + 0.4348vw, 2.5rem);
+    --space-xl: clamp(3.375rem, 3.2446rem + 0.6522vw, 3.75rem);
+    --space-2xl: clamp(4.5rem, 4.3261rem + 0.8696vw, 5rem);
+    --space-3xl: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
+
+    /* One-up pairs */
+    --space-3xs-2xs: clamp(0.3125rem, 0.2038rem + 0.5435vw, 0.625rem);
+    --space-2xs-xs: clamp(0.5625rem, 0.4321rem + 0.6522vw, 0.9375rem);
+    --space-xs-s: clamp(0.875rem, 0.7446rem + 0.6522vw, 1.25rem);
+    --space-s-m: clamp(1.125rem, 0.8641rem + 1.3043vw, 1.875rem);
+    --space-m-l: clamp(1.6875rem, 1.4049rem + 1.413vw, 2.5rem);
+    --space-l-xl: clamp(2.25rem, 1.7283rem + 2.6087vw, 3.75rem);
+    --space-xl-2xl: clamp(3.375rem, 2.8098rem + 2.8261vw, 5rem);
+    --space-2xl-3xl: clamp(4.5rem, 3.4565rem + 5.2174vw, 7.5rem);
+
+    /* Custom pairs */
+    --space-s-l: clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem);
+
+    --fs-900: var(--step-5);
+    --fs-800: var(--step-4);
+    --fs-700: var(--step-3);
+    --fs-600: var(--step-2);
+    --fs-500: var(--step-1);
+    --fs-400: var(--step-0);
+    --fs-300: var(--step--1);
+    --fs-200: var(--step--2);
+
+    --ff-heading: "Fira Sans", sans-serif;
+    --ff-body: "PT Serif", serif;
+}
+
+/* Utility classes */
+/* Typography */
+.bg-primary {
+    background-color: hsl(var(--clr-primary));
+}
+
+.bg-secondary {
+    background-color: hsl(var(--clr-secondary));
+}
+
+.bg-accent {
+    background-color: hsl(var(--clr-accent));
+}
+
+.text-primary {
+    color: hsl(var(--clr-primary));
+}
+
+.text-secondary {
+    color: hsl(var(--clr-secondary));
+}
+
+.text-accent {
+    color: hsl(var(--clr-accent));
+}
+
+.fs-900 {
+    font-size: var(--fs-900);
+}
+
+.fs-800 {
+    font-size: var(--fs-800);
+}
+
+.fs-700 {
+    font-size: var(--fs-700);
+}
+
+.fs-600 {
+    font-size: var(--fs-600);
+}
+
+.fs-500 {
+    font-size: var(--fs-500);
+}
+
+.fs-400 {
+    font-size: var(--fs-400);
+}
+
+.fs-300 {
+    font-size: var(--fs-300);
+}
+
+.fs-200 {
+    font-size: var(--fs-200);
+}
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600,
+.fs-500 {
+    line-height: 1.1;
+}
+
+.fs-400,
+.fs-300,
+.fs-200 {
+    line-height: 1.6;
+}
+
+.ff-heading {
+    font-family: var(--ff-heading);
+}
+
+.ff-body {
+    font-family: var(--ff-body);
+}
+
+/* Layout */
+.flow > * + * {
+    margin-top: var(--flow-space, 1em);
+}
+
+.wrapper {
+    max-width: 50rem;
+    padding-inline: var(--space-m);
+    margin-inline: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+    gap: var(--space-m);
+}
+
+/* Components */
+main {
+    min-height: 100vh;
+    place-content: center;
+
+    & button {
+        justify-self: center;
+        padding: 0.25em 1em;
+        border-radius: var(--space-m);
+        transition: background-color 350ms ease-in-out;
+
+        &:is(:hover, :focus-within) {
+            background-color: hsl(var(--clr-accent) / 0.75);
+        }
+    }
+
+    & .error {
+      color: red;
+    }
 }

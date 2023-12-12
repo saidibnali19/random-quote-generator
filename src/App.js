@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import axios from "axios";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [quote, setQuote] = useState("");
+    const [error, setError] = useState(false)
+
+    function getQuote() {
+        axios
+            .get("https://api.quotable.io/quotes/random")
+            .then((res) => setQuote(res.data[0].content))
+            .catch((err) => setError(true));
+    }
+
+    return (
+        <>
+            <main className="grid">
+                <button className="bg-accent text-primary" onClick={getQuote}>
+                    Get quote
+                </button>
+                {quote && <p className="text-center">{quote}</p>}
+                {error && <p className="error | fs-300">Failed to get quote</p>}
+            </main>
+        </>
+    );
 }
 
 export default App;
